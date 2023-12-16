@@ -1,0 +1,6 @@
+Flask
+Gunicorn
+openai
+requests
+redis
+requests_oauthlib
