@@ -35,7 +35,8 @@ def get_data_from_website(url):
 
 
 def set_database_records():
-    records_list = get_data_from_website(f'https://namebio.com/')
+    link = f"https://namebio.com"
+    records_list = get_data_from_website(link)
     main.r.delete('records_data')
     for record in records_list:
         # Convert the dictionary to a JSON string
