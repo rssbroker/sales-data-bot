@@ -23,7 +23,7 @@ def get_greeting():
             {"role": "user", "content": "Generate a greeting for the tweet and then add a colon ':' at the end"}
         ]
     )
-    return completion['choices'][0]['message']['content']
+    return completion.choices[0].message.content
 
 
 app = Flask(__name__)
