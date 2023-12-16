@@ -6,7 +6,8 @@ import main
 
 def get_data_from_website(url):
     response = requests.get(url)
-    soup = BeautifulSoup(response, 'html.parser')
+    content = response.text
+    soup = BeautifulSoup(content, 'html.parser')
 
     # Find the table with the specified ID
     table = soup.find('table-scrollable', {'id': 'search-results'})
