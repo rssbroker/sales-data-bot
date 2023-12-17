@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def get_url(website_url, email, password):
     received_url = ''
     options = webdriver.ChromeOptions()
-    options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome'
+    options.binary_location('/opt/render/project/.render/chrome/opt/google/chrome')
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
