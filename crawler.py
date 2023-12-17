@@ -15,6 +15,8 @@ def get_url(website_url, email, password):
     options.add_argument('--incognito')
     options.add_argument('--headless')
     options.add_argument('--remote-debugging-pipe')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     chrome_binary_path = '/opt/render/project/.render/chrome/opt/google/chrome'
     options.binary_location = chrome_binary_path
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version=chrome_version).install()), options=options)
