@@ -36,8 +36,8 @@ def get_data_from_website(page_source):
 
 def set_database_records():
     scraper_api_url = 'https://flask.therssbroker.repl.co/get_url'
-    data = {'email': os.environ("NAMEBIO_EMAIL"),
-           'password': 'IDontKnow101',
+    data = {'email': os.environ["NAMEBIO_EMAIL"],
+           'password': os.environ["NAMEBIO_PASSWORD"],
            'website_url': "https://namebio.com"}
 
     response = requests.post(scraper_api_url, json=data)
