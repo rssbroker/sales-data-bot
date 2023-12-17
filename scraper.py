@@ -1,4 +1,4 @@
-import requests
+    import requests
 from bs4 import BeautifulSoup
 import json
 import main
@@ -6,10 +6,8 @@ import os
 import crawler
 
 
-def get_data_from_website(url):
-    response = requests.get(url)
-    content = response.text
-    soup = BeautifulSoup(content, 'html.parser')
+def get_data_from_website(page_source):
+    soup = BeautifulSoup(page_source, 'html.parser')
 
     # Find the table with the specified ID
     table = soup.find('table-scrollable', {'id': 'search-results'})
