@@ -12,7 +12,7 @@ def get_url(website_url, email, password):
     options.add_argument('--incognito')
     options.add_argument('--headless')
     
-    driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", chrome_options=options)
+    driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", options=options)
     
     try:
         driver.get(website_url)
