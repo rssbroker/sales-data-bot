@@ -2,17 +2,18 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.service import Service
 
 
 def get_url(website_url, email, password):
     received_url = ''
-    
+    service = Service("/usr/lib/chromium-browser/chromedriver")
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
     
-    driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     
     try:
         driver.get(website_url)
