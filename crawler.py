@@ -11,6 +11,7 @@ def get_url(website_url, email, password):
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
+    options.add_argument('--remote-debugging-pipe')
     driver = webdriver.Chrome(options=options)
     
     try:
