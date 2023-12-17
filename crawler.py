@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 
 def get_url(website_url, email, password):
     received_url = ''
-    service = Service('/opt/render/project/.render/chrome/opt/google/chrome')
+    service = webdriver.ChromeService(executable_path='/opt/render/project/.render/chrome/opt/google/chrome')
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
