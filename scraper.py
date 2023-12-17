@@ -3,6 +3,7 @@ import json
 import main
 import os
 import crawler
+import requests
 
 
 def get_data_from_website(page_source):
@@ -35,8 +36,16 @@ def get_data_from_website(page_source):
 
 
 def set_database_records():
-    records_list = get_data_from_website(crawler.get_url(
-        'https://namebio.com', os.environ["NAMEBIO_EMAIL"], os.environ["NAMEBIO_PASSWORD"]))
+    scraper_api_url = 'https://flask.therssbroker.repl.co/get_url'
+    data = {'email': 'therssbroker@gmail.com',
+           'password': 'IDontKnow101',
+           'website_url': "https://namebio.com"}
+
+    response = requests.post(scraper_api_url, json=data)
+    response_data = json.loads(response.text)
+    received_url = response_data.get('received_url')
+    
+    records_list = get_data_from_website(received_url)
     main.r.delete('records_data')
     for record in records_list:
         # Convert the dictionary to a JSON string
