@@ -15,7 +15,10 @@ def get_url(website_url, email, password):
     options.add_argument('--incognito')
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--profile-directory=Default')
+    options.add_argument('--user-data-dir=~/.config/google-chrome')
     chrome_binary_path = '/opt/render/project/.render/chrome/opt/google/chrome'
     options.binary_location = chrome_binary_path
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version=chrome_version).install()), options=options)
