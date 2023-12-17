@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import json
 import main
 import os
-import crawler
 import requests
 
 
