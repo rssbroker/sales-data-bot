@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import main
+import os
 
 
 def get_data_from_website(url):
@@ -36,8 +37,8 @@ def get_data_from_website(url):
 
 
 def set_database_records():
-    link = f"https://namebio.com"
-    records_list = get_data_from_website(link)
+    records_list = get_data_from_website(crawler.get_url(
+        'https://namebio.com', os.environ["NAMEBIO_EMAIL"], os.environ["NAMEBIO_PASSWORD"]))
     main.r.delete('records_data')
     for record in records_list:
         # Convert the dictionary to a JSON string
