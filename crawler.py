@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 def get_url(website_url, email, password):
     received_url = ''
@@ -12,8 +14,7 @@ def get_url(website_url, email, password):
     options.add_argument('--incognito')
     options.add_argument('--headless')
     options.add_argument('--remote-debugging-pipe')
-    options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome'
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     
     try:
         driver.get(website_url)
