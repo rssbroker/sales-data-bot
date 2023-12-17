@@ -5,11 +5,12 @@ from selenium.common.exceptions import NoSuchElementException
 
 def get_url(website_url, email, password):
     received_url = ''
+    service = Service('/opt/render/project/.render/chrome/opt/google/chrome')
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     
     try:
         driver.get(website_url)
