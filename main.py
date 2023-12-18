@@ -9,7 +9,6 @@ from requests.auth import AuthBase, HTTPBasicAuth
 from requests_oauthlib import OAuth2Session, TokenUpdated
 from flask import Flask, request, redirect, session, url_for, render_template
 from openai import OpenAI
-import scraper
 
 r = redis.from_url(os.environ["REDIS_URL"])
 
@@ -50,7 +49,6 @@ def make_token():
 
 
 def parse_post_content():
-    scraper.set_database_records()
     greeting_string = get_greeting()
     records = fetch_database_records()
 
