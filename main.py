@@ -58,7 +58,7 @@ def parse_post_content():
     # Iterate through the list of dictionaries
     for record in records:
         # Append the desired key-value pairs to the output string
-        records_output_string += f"{record['price']} {record['domain']}\n"
+        records_output_string += f"{record['Price']} {record['Domain']}\n"
     return greeting_string + '\n\n' + records_output_string
 
 
