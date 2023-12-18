@@ -66,7 +66,7 @@ def fetch_database_records():
     redis_data_list = r.lrange('records_data', 0, -1)
     # Decode JSON strings back to dictionaries
     decoded_data_list = [json.loads(data) for data in redis_data_list]
-    return decoded_data_list
+    return decoded_data_list[:5]
 
 
 def post_tweet(payload, token):
