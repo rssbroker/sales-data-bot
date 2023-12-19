@@ -22,6 +22,6 @@ st_refreshed_token = '"{}"'.format(refreshed_token)
 j_refreshed_token = json.loads(st_refreshed_token)
 main.r.set("token", j_refreshed_token)
 
-content = main.parse_post_content()
+content = main.get_tweet()
 payload = {"text": "{}".format(content)}
 main.post_tweet(payload, refreshed_token)
