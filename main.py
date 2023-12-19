@@ -74,7 +74,7 @@ def parse_post_content():
     for record in records:
         # Append the desired key-value pairs to the output string
         domain = remove_after_period_and_capitalize(record['Domain'])
-        records_output_string += f"{record['Domain']} sold for {record['Price']}!\n"
+        records_output_string += f"{domain} sold for {record['Price']}!\n"
     return greeting_string + '\n\n' + records_output_string
 
 
