@@ -18,9 +18,11 @@ def get_greeting():
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a twitter bot which shows daily domain name sales data."},
-            {"role": "user", "content": "Generate a greeting for the tweet and then add a colon ':' at the end"}
-        ]
+            {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
+            {"role": "user", "content": "Generate a natural and engaging greeting to start your tweet [Add a colon ':' at the end of the greeting]"}
+        ],
+        max_tokens=40,
+        temperature=0.8
     )
     return completion.choices[0].message.content
 
@@ -43,6 +45,19 @@ code_challenge = hashlib.sha256(code_verifier.encode("utf-8")).digest()
 code_challenge = base64.urlsafe_b64encode(code_challenge).decode("utf-8")
 code_challenge = code_challenge.replace("=", "")
 
+def remove_after_period_and_capitalize(input_string):
+    # Find the index of the first period in the string
+    period_index = input_string.find('.')
+    
+    # If a period is found, truncate the string up to that index
+    if period_index != -1:
+        result_string = input_string[:period_index]
+    else:
+        # If no period is found, return the original string
+        result_string = input_string
+    
+    return result_string.capitalize()
+
 
 def make_token():
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scopes)
@@ -58,7 +73,8 @@ def parse_post_content():
     # Iterate through the list of dictionaries
     for record in records:
         # Append the desired key-value pairs to the output string
-        records_output_string += f"{record['Price']} {record['Domain']}\n"
+        domain = remove_after_period_and_capitalize(record['Domain'])
+        records_output_string += f"{record['Domain']} sold for {record['Price']}!\n"
     return greeting_string + '\n\n' + records_output_string
 
 
