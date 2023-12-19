@@ -36,6 +36,7 @@ def update_counter():
 #     return completion.choices[0].message.content
 
 def get_tweet():
+    return make_plain_post()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
