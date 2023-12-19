@@ -108,7 +108,7 @@ def callback():
     st_token = '"{}"'.format(token)
     j_token = json.loads(st_token)
     r.set("token", j_token)
-    content = parse_post_content()
+    content = get_tweet()
     payload = {"text": "{}".format(content)}
     response = post_tweet(payload, token).json()
     return response
