@@ -13,7 +13,7 @@ from openai import OpenAI
 r = redis.from_url(os.environ["REDIS_URL"])
 
 def update_counter():
-    r.set("counter", (r.get("counter") + 1) % 24)
+    r.set("counter", ((int(r.get("counter")) + 1)% 24))
 
 def get_tweet():
     boring_phrase = make_plain_post()
@@ -66,7 +66,7 @@ def make_plain_post():
 
 
 def fetch_database_record():
-    database_record = r.lindex('records_data', r.get("counter"))
+    database_record = r.lindex('records_data', int(r.get("counter")))
     # Decode JSON strings back to dictionaries
     decoded_database_record = json.loads(database_record)
     update_counter()
