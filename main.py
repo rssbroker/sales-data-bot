@@ -12,15 +12,19 @@ from openai import OpenAI
 
 r = redis.from_url(os.environ["REDIS_URL"])
 
-def get_greeting():
+def update_counter():
+    r.set("counter", (r.get("counter") + 1) % 24)
+
+def get_tweet():
+    boring_phrase = make_plain_post()
     client = OpenAI()
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
-            {"role": "user", "content": "Generate a natural and engaging greeting to start your tweet [Add a colon ':' at the end of the greeting]"}
+            {"role": "user", "content": f"Here's a boring tweet: {boring_phrase}. Rewrite this to make it an exciting tweet and add emojis (encoded in utf-8) too."}
         ],
-        max_tokens=200,
+        max_tokens=100,
         temperature=0.8
     )
     return completion.choices[0].message.content
@@ -49,28 +53,23 @@ def make_token():
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scopes)
 
 
-def parse_post_content():
-    greeting_string = get_greeting()
-    records = fetch_database_records()
-
+def make_plain_post():
+    record = fetch_database_record()
     # Initialize an empty string to store the formatted output
     records_output_string = ""
 
-    # Iterate through the list of dictionaries
-    for record in records:
-        # Append the desired key-value pairs to the output string
-        domain = "https://" + record['Domain']
-        price = "${:,}".format(int(record['Price']))
-        venue = record['Venue']
-        records_output_string += f"{domain} sold for {price} at {venue}\n"
-    return greeting_string + '\n\n' + records_output_string
+    domain = "https://" + record['Domain']
+    price = "${:,}".format(int(record['Price']))
+    venue = record['Venue']
+    record_output_string = f"{domain} sold for {price} at {venue}\n"
+    return record_output_string
 
 
-def fetch_database_records():
-    redis_data_list = r.lrange('records_data', 0, -1)
+def fetch_database_record():
+    database_record = r.lindex('records_data', r.get("counter"))
     # Decode JSON strings back to dictionaries
-    decoded_data_list = [json.loads(data) for data in redis_data_list]
-    return decoded_data_list[:5]
+    decoded_database_record = json.loads(database_record)
+    return decoded_database_record
 
 
 def post_tweet(payload, token):
