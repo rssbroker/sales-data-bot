@@ -69,9 +69,8 @@ def make_plain_post():
     domain = "https://" + record['Domain']
     price = "${:,}".format(int(record['Price']))
     venue = record['Venue']
-    record_output_string = f"{domain} sold for {price} on {venue} "
-    record_output_string = record_output_string + "\U0001F38A"+"\U0001F4B0" + "\n"
-    record_output_string = record_output_string + "#Domains"
+    record_output_string = f"Domain name {domain} sold for {price} on {venue} "
+    record_output_string = record_output_string + "\U0001F38A" + " #Domains"
     return record_output_string
 
 
