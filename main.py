@@ -69,6 +69,7 @@ def fetch_database_record():
     database_record = r.lindex('records_data', r.get("counter"))
     # Decode JSON strings back to dictionaries
     decoded_database_record = json.loads(database_record)
+    update_counter()
     return decoded_database_record
 
 
