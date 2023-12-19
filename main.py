@@ -19,20 +19,23 @@ def update_counter():
     else: 
         r.set("counter", 0)
 
-def get_tweet():
-    boring_phrase = make_plain_post()
-    client = OpenAI()
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
-            {"role": "user", "content": f"Here's a boring tweet: {boring_phrase}. Rewrite this to make it an exciting tweet and add emojis (encoded in utf-8) too."}
-        ],
-        max_tokens=100,
-        temperature=0.8
-    )
-    return completion.choices[0].message.content
+#This is for OpenAI
 
+# def get_tweet():
+#     plain_text = make_plain_post()
+#     client = OpenAI()
+#     completion = client.chat.completions.create(
+#         model="gpt-3.5-turbo",
+#         messages=[
+#             {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
+#             {"role": "user", "content": f"Here's a boring tweet: {plain_text}. Rewrite this to make it an exciting tweet and add emojis (encoded in utf-8) too."}
+#         ],
+#         max_tokens=100,
+#         temperature=0.8
+#     )
+#     return completion.choices[0].message.content
+
+def get_tweet():
 
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
@@ -65,7 +68,9 @@ def make_plain_post():
     domain = "https://" + record['Domain']
     price = "${:,}".format(int(record['Price']))
     venue = record['Venue']
-    record_output_string = f"{domain} sold for {price} at {venue}\n"
+    record_output_string = f"{domain} sold for {price} on {venue} "
+    record_output_string = record_output_string + "\U0001F38A"+"\U0001F4B0" + "\n"
+    record_output_string = record_output_string + "#Domains"
     return record_output_string
 
 
