@@ -13,7 +13,11 @@ from openai import OpenAI
 r = redis.from_url(os.environ["REDIS_URL"])
 
 def update_counter():
-    r.set("counter", ((int(r.get("counter")) + 1)% 24))
+    counter = int(r.get("counter"))
+    if counter >= 0 and counter <= 23):
+        r.incr("counter")
+    else = 
+        r.set("counter", 0)
 
 def get_tweet():
     boring_phrase = make_plain_post()
