@@ -70,9 +70,10 @@ def make_plain_post():
 
 
 def fetch_database_record():
-    database_record = r.lindex('records_data', int(r.get("counter")))
+    database_record = r.get('records_data')
     # Decode JSON strings back to dictionaries
-    decoded_database_record = json.loads(database_record)
+    database_record = json.loads(database_record)
+    decoded_database_record = database_record[int(r.get("counter"))]
     update_counter()
     return decoded_database_record
 
