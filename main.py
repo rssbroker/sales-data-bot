@@ -21,7 +21,7 @@ def get_greeting():
             {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
             {"role": "user", "content": "Generate a natural and engaging greeting to start your tweet [Add a colon ':' at the end of the greeting]"}
         ],
-        max_tokens=40,
+        max_tokens=200,
         temperature=0.8
     )
     return completion.choices[0].message.content
