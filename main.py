@@ -11,7 +11,7 @@ from flask import Flask, request, redirect, session, url_for, render_template
 from openai import OpenAI
 
 r = redis.from_url(os.environ["REDIS_URL"])
-
+r.set("counter") = get_counter()
 
 def get_greeting():
     client = OpenAI()
