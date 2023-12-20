@@ -27,5 +27,5 @@ def every_tweet():
     payload = {"text": "{}".format(content)}
     main.post_tweet(payload, refreshed_token)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     every_tweet()
