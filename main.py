@@ -14,7 +14,7 @@ r = redis.from_url(os.environ["REDIS_URL"])
 
 def update_counter():
     counter = int(r.get("counter"))
-    if (counter >= 0 and counter <= 23):
+    if (counter >= 0 and counter <= 29):
         r.incr("counter")
     else: 
         r.set("counter", 0)
