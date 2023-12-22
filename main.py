@@ -12,14 +12,7 @@ from openai import OpenAI
 
 r = redis.from_url(os.environ["REDIS_URL"])
 
-def update_counter():
-    counter = int(r.get("counter"))
-    if (counter >= 0 and counter <= 29):
-        r.incr("counter")
-    else: 
-        r.set("counter", 0)
-
-#This is for OpenAI
+# This is for OpenAI
 
 # def get_tweet():
 #     plain_text = make_plain_post()
@@ -35,8 +28,10 @@ def update_counter():
 #     )
 #     return completion.choices[0].message.content
 
+
 def get_tweet():
     return make_plain_post()
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
@@ -63,24 +58,27 @@ def make_token():
 
 def make_plain_post():
     record = fetch_database_record()
-    # Initialize an empty string to store the formatted output
-    records_output_string = ""
-
-    domain = "https://" + record['Domain']
-    price = "${:,}".format(int(record['Price']))
-    venue = record['Venue']
-    record_output_string = f"Domain name {domain} sold for {price} on {venue} "
-    record_output_string = record_output_string + "\U0001F38A" + " #Domains"
-    return record_output_string
+    if record:
+        domain = "https://" + record['Domain']
+        price = "${:,}".format(int(record['Price']))
+        venue = record['Venue']
+        record_output_string = f"Domain name {domain} sold for {price} on {venue} "
+        record_output_string = record_output_string + "\U0001F38A" + " #Domains"
+        return record_output_string
+    else:
+        return None
 
 
 def fetch_database_record():
-    database_record = r.get('records_data')
-    # Decode JSON strings back to dictionaries
-    database_record = json.loads(database_record)
-    decoded_database_record = database_record[int(r.get("counter"))]
-    update_counter()
-    return decoded_database_record
+    raw_stack = r.get('stack')
+    if raw_stack:
+        output_stack = json.loads(raw_stack)
+        decoded_database_record = output_stack.pop()
+        input_stack = json.dumps(output_stack)
+        r.set('stack', input_stack)
+        return decoded_database_record
+    else:
+        return None
 
 
 def post_tweet(payload, token):
