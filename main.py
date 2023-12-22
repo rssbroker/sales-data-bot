@@ -58,28 +58,21 @@ def make_token():
 
 def make_plain_post():
     record = fetch_database_record()
-    if record:
-        domain = "https://" + record['Domain']
-        price = "${:,}".format(int(record['Price']))
-        venue = record['Venue']
-        record_output_string = f"Domain name {domain} sold for {price} on {venue} "
-        record_output_string = record_output_string + "\U0001F38A" + " #Domains"
-        return record_output_string
-    else:
-        return None
+    domain = "https://" + record['Domain']
+    price = "${:,}".format(int(record['Price']))
+    venue = record['Venue']
+    record_output_string = f"Domain name {domain} sold for {price} on {venue} "
+    record_output_string = record_output_string + "\U0001F38A" + " #Domains"
+    return record_output_string
 
 
 def fetch_database_record():
     raw_stack = r.get('stack')
-    if raw_stack:
-        output_stack = json.loads(raw_stack)
-        decoded_database_record = output_stack.pop()
-        input_stack = json.dumps(output_stack)
-        r.set('stack', input_stack)
-        return decoded_database_record
-    else:
-        return None
-
+    output_stack = json.loads(raw_stack)
+    decoded_database_record = output_stack.pop()
+    input_stack = json.dumps(output_stack)
+    r.set('stack', input_stack)
+    return decoded_database_record
 
 def post_tweet(payload, token):
     print("Tweeting!")
