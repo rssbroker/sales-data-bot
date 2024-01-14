@@ -12,26 +12,8 @@ from openai import OpenAI
 
 r = redis.from_url(os.environ["REDIS_URL"])
 
-# This is for OpenAI
-
-# def get_tweet():
-#     plain_text = make_plain_post()
-#     client = OpenAI()
-#     completion = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         messages=[
-#             {"role": "system", "content": "You are a twitter bot that displays daily sales reports of website domains."},
-#             {"role": "user", "content": f"Here's a boring tweet: {plain_text}. Rewrite this to make it an exciting tweet and add emojis (encoded in utf-8) too."}
-#         ],
-#         max_tokens=100,
-#         temperature=0.8
-#     )
-#     return completion.choices[0].message.content
-
-
 def get_tweet():
     return make_plain_post()
-
 
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
