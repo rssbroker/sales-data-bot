@@ -10,15 +10,6 @@ def make_post():
     return "Yesterday's sales totalled " + f"${sales:,}!"
 
 
-def date_parser(input):
-    input_split = input.split("-")
-    year = int(input_split[0])
-    month = int(input_split[1])
-    day = int(input_split[2])
-    result = date(year, month, day)
-    return result
-
-
 flag = main.r.get('flag')
 flag = str(flag, encoding='utf-8')
 if flag == 'True':
