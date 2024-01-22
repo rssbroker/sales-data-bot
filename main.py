@@ -15,6 +15,9 @@ r = redis.from_url(os.environ["REDIS_URL"])
 def get_tweet():
     return make_plain_post()
 
+def get_day_tweet():
+    return make_day_post()
+
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
 
@@ -46,6 +49,13 @@ def make_plain_post():
     record_output_string = f"Domain name {domain} sold for {price} on {venue} "
     record_output_string = record_output_string + "\U0001F38A" + " #Domains"
     return record_output_string
+
+def make_day_post():
+    sales = r.get('sales')
+    sales = str(sales, encoding='utf-8')
+    sales = int(sales)
+    r.set('flag', "False")
+    return "Yesterday's sales totalled " + f"${sales:,}!"
 
 
 def fetch_database_record():
