@@ -4,12 +4,6 @@ import os
 from datetime import date
 
 
-def make_post():
-    sales = str(main.r.get('sales'), encoding='utf-8')
-    sales = int(sales)
-    return "Yesterday's sales totalled " + f"${sales:,}!"
-
-
 flag = main.r.get('flag')
 flag = str(flag, encoding='utf-8')
 if flag == 'True':
@@ -32,7 +26,6 @@ if flag == 'True':
     st_refreshed_token = '"{}"'.format(refreshed_token)
     j_refreshed_token = json.loads(st_refreshed_token)
     main.r.set("token", j_refreshed_token)
-    content = make_post()
+    content = main.get_day_tweet()
     payload = {"text": "{}".format(content)}
     main.post_tweet(payload, refreshed_token)
-    main.r.set('flag', 'False')
