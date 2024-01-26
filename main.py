@@ -55,7 +55,7 @@ def make_day_post():
     sales = str(sales, encoding='utf-8')
     sales = int(sales)
     r.set('flag', "False")
-    return "Yesterday's sales totalled " + f"${sales:,}!"
+    return "Yesterday's domain sales from all marketplaces totaled " + f"${sales:,}! " + "\U0001F38A" + "#Domains"
 
 
 def fetch_database_record():
