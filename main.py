@@ -12,11 +12,18 @@ from openai import OpenAI
 
 r = redis.from_url(os.environ["REDIS_URL"])
 
+
 def get_tweet():
     return make_plain_post()
 
+
 def get_day_tweet():
     return make_day_post()
+
+
+def get_headline():
+    return make_headline_post()
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(50)
@@ -50,6 +57,14 @@ def make_plain_post():
     record_output_string = record_output_string + "\U0001F38A" + " #Domains"
     return record_output_string
 
+
+def make_headline_post():
+    headline = fetch_headline()
+    title = headline['title']
+    link = headline['link']
+    return f"\U0001F4F0 {title}\n{link}"
+
+
 def make_day_post():
     sales = r.get('sales')
     sales = str(sales, encoding='utf-8')
@@ -65,6 +80,16 @@ def fetch_database_record():
     input_stack = json.dumps(output_stack)
     r.set('stack', input_stack)
     return decoded_database_record
+
+
+def fetch_headline():
+    headlines = r.get('headlines')
+    output_stack = json.loads(headlines)
+    output_headline = output_stack.pop()
+    input_stack = json.dumps(output_stack)
+    r.set('headlines', input_stack)
+    return output_headline
+
 
 def post_tweet(payload, token):
     print("Tweeting!")
