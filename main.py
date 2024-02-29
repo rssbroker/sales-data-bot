@@ -62,7 +62,7 @@ def make_headline_post():
     headline = fetch_headline()
     title = headline['title']
     link = headline['link']
-    return f"\U0001F4F0 {title}\n{link}"
+    return f"\U0001F4F0 {title}\n{link}" + " #Domains"
 
 
 def make_day_post():
