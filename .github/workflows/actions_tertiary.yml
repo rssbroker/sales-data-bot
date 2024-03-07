@@ -30,5 +30,6 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           REDIS_URL: ${{ secrets.REDIS_URL }}
           REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+          TINY_KEY: ${{ secrets.TINY_KEY }}
         run: python every_other_headline.py
           
