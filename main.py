@@ -33,6 +33,7 @@ client_secret = os.environ.get("CLIENT_SECRET")
 auth_url = "https://twitter.com/i/oauth2/authorize"
 token_url = "https://api.twitter.com/2/oauth2/token"
 redirect_uri = os.environ.get("REDIRECT_URI")
+tiny_key = os.environ.get("TINY_KEY")
 
 scopes = ["tweet.read", "users.read", "tweet.write", "offline.access"]
 
@@ -42,6 +43,24 @@ code_verifier = re.sub("[^a-zA-Z0-9]+", "", code_verifier)
 code_challenge = hashlib.sha256(code_verifier.encode("utf-8")).digest()
 code_challenge = base64.urlsafe_b64encode(code_challenge).decode("utf-8")
 code_challenge = code_challenge.replace("=", "")
+
+def get_short_url(input_url):
+    headers = {
+        'accept': 'application/json',
+    }
+    params = {
+        'api_token': tiny_key,
+    }
+    json_data = {
+        'url': input_url,
+        'domain': 'tinyurl.com'
+    }
+    response = requests.post(api_url, params=params, headers=headers, json=json_data)
+    response = response.text
+    jsonblob = json.loads(response)
+    tinyurl = jsonblob['data']['tiny_url']
+    return tinyurl
+    
 
 
 def make_token():
@@ -62,7 +81,8 @@ def make_headline_post():
     headline = fetch_headline()
     title = headline['title']
     link = headline['link']
-    return f"\U0001F4F0 {title}\n{link}" + " #Domains"
+    short_link = get_short_url(link)
+    return f"\U0001F4F0 {title}\n{short_link}\n" + " #Domains"
 
 
 def make_day_post():
