@@ -45,6 +45,7 @@ code_challenge = base64.urlsafe_b64encode(code_challenge).decode("utf-8")
 code_challenge = code_challenge.replace("=", "")
 
 def get_short_url(input_url):
+    api_url = 'https://api.tinyurl.com/create'
     headers = {
         'accept': 'application/json',
     }
